@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import com.example.catalog.dto.Catalog;
+
 public class CustomJComboBox<T> extends JComboBox<T> {
 
 	/**
@@ -22,7 +24,8 @@ public class CustomJComboBox<T> extends JComboBox<T> {
 	@SuppressWarnings("unchecked")
 	public void init() {
 
-		setPrototypeDisplayValue(defaultValue);
+		
+		addItem(defaultValue);
 		for (T item : dataSource) {
 			addItem(item);
 		}
@@ -32,6 +35,8 @@ public class CustomJComboBox<T> extends JComboBox<T> {
 			T item = (T)c.getSelectedItem();
 
 		});
+		
+		setSelectedItem(defaultValue);
 
 	}
 

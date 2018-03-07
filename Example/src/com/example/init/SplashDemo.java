@@ -1,83 +1,88 @@
 package com.example.init;
 
-
-
-/*
- * SplashDemo.java
- *
- */
-import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Frame;
-import java.awt.Graphics2D;
-import java.awt.Menu;
-import java.awt.MenuBar;
-import java.awt.MenuItem;
-import java.awt.SplashScreen;
-import java.awt.event.ActionEvent;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
-public class SplashDemo extends Frame implements ActionListener {
-	static void renderSplashFrame(Graphics2D g, int frame) {
-		final String[] comps = { "foo", "bar", "baz" };
-		g.setComposite(AlphaComposite.Clear);
-		g.fillRect(120, 140, 200, 40);
-		g.setPaintMode();
-		g.setColor(Color.BLACK);
-		g.drawString("Loading " + comps[(frame / 5) % 3] + "...", 120, 150);
-	}
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JWindow;
+import javax.swing.Timer;
+import javax.swing.border.EtchedBorder;
 
-	public SplashDemo() {
-		super("SplashScreen demo");
-		setSize(300, 200);
-		setLayout(new BorderLayout());
-		Menu m1 = new Menu("File");
-		MenuItem mi1 = new MenuItem("Exit");
-		m1.add(mi1);
-		mi1.addActionListener(this);
-		this.addWindowListener(closeWindow);
+import com.example.forms.LoginForm;
+import com.example.forms.Main;
+import com.example.util.Utilerias;
 
-		MenuBar mb = new MenuBar();
-		setMenuBar(mb);
-		mb.add(m1);
-		final SplashScreen splash = SplashScreen.getSplashScreen();
-		if (splash == null) {
-			System.out.println("SplashScreen.getSplashScreen() returned null");
-			return;
-		}
-		Graphics2D g = splash.createGraphics();
-		if (g == null) {
-			System.out.println("g is null");
-			return;
-		}
-		for (int i = 0; i < 100; i++) {
-			renderSplashFrame(g, i);
-			splash.update();
-			try {
-				Thread.sleep(90);
-			} catch (InterruptedException e) {
-			}
-		}
-		splash.close();
-		setVisible(true);
-		toFront();
-	}
-
-	public void actionPerformed(ActionEvent ae) {
-		System.exit(0);
-	}
-
-	private static WindowListener closeWindow = new WindowAdapter(){
-        public void windowClosing(WindowEvent e){
-            e.getWindow().dispose();
-        }
-    };
+public class SplashDemo {
 
 	public static void main(String[] args) {
-		new SplashDemo();
+		SplashScreen splashScreen = new SplashScreen();
+	}
+}
+
+class SplashScreen extends JWindow {
+	private static final long serialVersionUID = 1L;
+	static JProgressBar progressBar = new JProgressBar();
+	static int count = 1, TIMER_PAUSE = 15, PROGBAR_MAX = 100;
+	static Timer progressBarTimer;
+	ActionListener al = new ActionListener() {
+		@Override
+		public void actionPerformed(java.awt.event.ActionEvent evt) {
+			progressBar.setValue(count);
+			if (PROGBAR_MAX == count) {
+				progressBarTimer.stop();
+				SplashScreen.this.setVisible(false);
+				createAndShowFrame();
+			}
+			count++;
+		}
+	};
+
+	public SplashScreen() {
+		Container container = getContentPane();
+
+		JPanel panel = new JPanel();
+		panel.setBorder(new EtchedBorder());
+		container.add(panel, BorderLayout.CENTER);
+
+		JLabel label = new JLabel(Utilerias.getPropertyValue("splash.title"));
+		label.setFont(new Font("Verdana", Font.BOLD, 14));
+		panel.add(label);
+
+		progressBar.setMaximum(PROGBAR_MAX);
+		container.add(progressBar, BorderLayout.SOUTH);
+		pack();
+		setVisible(true);
+		startProgressBar();
+		centreWindow(this);
+	}
+
+	public void centreWindow(Window frame) {
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+		int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+		int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+		frame.setLocation(x, y);
+	}
+
+	private void startProgressBar() {
+		progressBarTimer = new Timer(TIMER_PAUSE, al);
+		progressBarTimer.start();
+	}
+
+	private void createAndShowFrame() {
+		Main demo =   Main.getInstance();
+		demo.setup();
+		LoginForm login  = new LoginForm();
+		demo.setFrame(login,login.getWidth(),login.getHeight() );
+		
+//		demo.setFrame(new App(),300,205);
+		
+
 	}
 }

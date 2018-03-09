@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menubar>
+	<menu title="Parent 1">
+		<menu title="${APP.TITLE}" listener="simpleListener" icon="icons/code.gif"/>
+		<menu title="Child 2" listener="simpleListener" />
+		<menu title="Child 3" listener="simpleListener" />
+		<menu title="Child 4" listener="simpleListener" />
+	</menu>
+
+	<menu title="Item 1" listener="simpleListener"  />
+
+	<menu title="Grand Parent 1" >
+		<menu title="Parent 2">
+			<menu title="Child 5" listener="simpleListener" />
+		</menu>
+	</menu>
+
+</menubar>

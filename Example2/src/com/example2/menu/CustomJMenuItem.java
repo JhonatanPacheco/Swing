@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 
-@SuppressWarnings("hiding")
-public class CustomJMenuItem< CustomMenu extends JMenuItem  > extends JMenuItem implements ActionListener {
+public class CustomJMenuItem extends JMenuItem implements ActionListener {
 
 	/**
 	 * 
@@ -29,16 +28,20 @@ public class CustomJMenuItem< CustomMenu extends JMenuItem  > extends JMenuItem 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		//Referencia a un AbstractViewControllerFactory 
-		if (key.equals("os.app.chrome")) {
-            System.out.println("os.app.chrome");
-        }
-		
-		/*
-         * aqui todos los IF para cada una de las opciones del menu, por eso
-         * digo que no es muy eficiente este metodo, muchos IF, pero ni modo xD
-         */
+		if(e.getActionCommand().equals("com.example2.utilerias.LoginAction")){
+			
+		}
 
 	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+
 
 }

@@ -1,9 +1,12 @@
 package com.example2.menu;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 
-public class CustomJMenu <CustomMenu >  extends JMenu {
+public class CustomJMenu  extends JMenu  implements ActionListener{
 
 	/**
 	 * 
@@ -11,8 +14,8 @@ public class CustomJMenu <CustomMenu >  extends JMenu {
 	private static final long serialVersionUID = 1L;
 	private String label;
 	private ImageIcon icon;
+	private ActionListener actionListener;
 	
-	private CustomMenu menu;
 	
 	public CustomJMenu(String label, ImageIcon icon) {
 		super(label);
@@ -40,12 +43,20 @@ public class CustomJMenu <CustomMenu >  extends JMenu {
 		this.icon = icon;
 	}
 
-	public CustomMenu getMenu() {
-		return menu;
+	
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void setMenu(CustomMenu menu) {
-		this.menu = menu;
+	public ActionListener getActionListener() {
+		return actionListener;
+	}
+
+	public void setActionListener(ActionListener actionListener) {
+		this.actionListener = actionListener;
 	}
 
 	

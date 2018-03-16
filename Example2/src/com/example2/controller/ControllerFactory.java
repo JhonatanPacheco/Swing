@@ -10,8 +10,12 @@ public class ControllerFactory {
 		
 		
 		
-		if (view instanceof LoginInternalFrame)
+		if (view instanceof LoginInternalFrame){
 			new LoginInternalFrameController(view);
+		}else{
+			 new  NoInternalFrameAvalibleController(view);
+		}
+			
 		
 		
 //		else if (view instanceof AddReaderInternalFrame)
